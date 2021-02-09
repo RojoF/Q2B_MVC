@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Prueba Técnica</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <header>
+        <nav class="navbar fixed-top navbar-dark bg-dark">
+            <a class="navbar-brand" href="https://www.q2bstudio.com/">
+                <img src="~/Content/Images/q2b.jpeg" width="40" height="40" class="d-inline-block align-top">
+            </a>
+        </nav>
+    </header>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p><b>&copy; @DateTime.Now.Year - Prueba Técnica Q2B</b></p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    @Scripts.Render("~/bundles/toastr")
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
+

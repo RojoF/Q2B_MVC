@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Q2B_MVC.Models.Imagenes>
+@{
+    ViewBag.Title = "Prueba Q2B";
+}
+
+<!-- Image and text -->
+<div class="container">
+    <div class="card-deck" style="margin-top:35px;">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+
+            <!-- Bucle para pintar todas las cards que hay en BBDD-->
+            @foreach (var item in Model)
+            {
+                <div Class="col">
+                    <div Class="card text-white bg-dark mb-3" style="max-width: 30rem">
+                        <img Class="card-img-top" src="@Url.Content(item.UrlImagen)"
+                             alt="Card image cap" height="200">
+                        <div Class="card-body">
+                            <h5 Class="card-title"> @Html.DisplayFor(modelItem => item.Titulo)</h5>
+                            <p Class="card-text">
+                                @Html.DisplayFor(modelItem => item.Descripcion)
+                            </p>
+                        </div>
+                        <div Class="card-footer">
+                            <small Class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <button type="button" Class="btn btn-primary btn-block"
+            onclick="location.href='@Url.Action("Index", "imagenes")';">
+        Modificar Tarjetas
+    </button>
+</div>
+
+<!-- Modal -->
+<div Class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
+    <div Class="modal-dialog" role="document">
+        <div Class="modal-content">
+            <div Class="modal-header">
+                <h5 Class="modal-title col-11 text-center" id="exampleModalLabel">
+                    <b>
+                        Para ver este contenido, necesitamos comprobar que
+                        eres mayor de edad
+                    </b>
+                </h5>
+
+                <br />
+                <br />
+                <br />
+
+            </div>
+            <div class="modal-body col-xs-2">
+
+                <label id="label" class="control-label">Introduce tu fecha de nacimiento:</label>
+                <label id="label_dos" class="control-label" style="display:none;color:red">
+                    Lo sentimos, no podemos enseñarte el contenido, vuelve cuando seas mayor de edad, Adios!!
+                </label>
+                <img class="mx-auto" id="bye" src="~/Content/Images/bye.png" style="display:none;max-height:15rem">
+                <input id="edad" type="text" class="form-control" aria-describedby="inputGroup-sizing-sm"
+                       onkeypress=" return soloNumeros(event);" placeholder="DD/MM/AAAA" />
+                <button id="salir" type="button" class="btn btn-danger" onclick="window.close()" style="display:none;">Salir</button>
+            </div>
+            <div class="modal-footer">
+                <button id="close" class="btn btn-primary btn-lg btn-block" onclick="validarFecha()">Aceptar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+

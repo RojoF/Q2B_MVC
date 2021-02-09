@@ -1,0 +1,51 @@
+﻿@model Q2B_MVC.Models.Imagenes
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2 style="margin-top:35px">Eliminar Tarjeta</h2>
+
+<h3>¿Estás seguro que quieres borrar?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UrlImagen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UrlImagen)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <button type="button" class="btn btn-primary"
+                    onclick="location.href='@Url.Action("Index")';">
+                Atrás
+            </button>
+        </div>
+    }
+</div>
