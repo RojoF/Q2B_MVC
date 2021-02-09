@@ -3,7 +3,7 @@
     ViewBag.Title = "Prueba Q2B";
 }
 
-<!-- Image and text -->
+<!-- Cards -->
 <div class="container">
     <div class="card-deck" style="margin-top:35px;">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
@@ -41,7 +41,8 @@
 </div>
 
 <!-- Modal -->
-<div Class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+<div Class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true"
      data-backdrop="static" data-keyboard="false">
     <div Class="modal-dialog" role="document">
         <div Class="modal-content">
@@ -52,11 +53,9 @@
                         eres mayor de edad
                     </b>
                 </h5>
-
                 <br />
                 <br />
                 <br />
-
             </div>
             <div class="modal-body col-xs-2">
 
@@ -67,7 +66,10 @@
                 <img class="mx-auto" id="bye" src="~/Content/Images/bye.png" style="display:none;max-height:15rem">
                 <input id="edad" type="text" class="form-control" aria-describedby="inputGroup-sizing-sm"
                        onkeypress=" return soloNumeros(event);" placeholder="DD/MM/AAAA" />
-                <button id="salir" type="button" class="btn btn-danger" onclick="window.close()" style="display:none;">Salir</button>
+                <button id="salir" type="button" class="btn btn-danger"
+                        onclick="window.close()" style="display:none;">
+                    Salir
+                </button>
             </div>
             <div class="modal-footer">
                 <button id="close" class="btn btn-primary btn-lg btn-block" onclick="validarFecha()">Aceptar</button>

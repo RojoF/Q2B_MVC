@@ -42,8 +42,7 @@ namespace Q2B_MVC.Controllers
         }
 
         // POST: Imagenes/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Titulo,Descripcion,UrlImagen")] Imagenes imagenes)
@@ -74,8 +73,7 @@ namespace Q2B_MVC.Controllers
         }
 
         // POST: Imagenes/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Titulo,Descripcion,UrlImagen")] Imagenes imagenes)

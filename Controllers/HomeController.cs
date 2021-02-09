@@ -14,19 +14,5 @@ namespace Q2B_MVC.Controllers
         {
             return View(db.Imagenes.ToList());
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
