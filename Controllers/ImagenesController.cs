@@ -81,6 +81,7 @@ namespace Q2B_MVC.Controllers
         public ActionResult Edit([Bind(Include = "Id,Titulo,Descripcion,UrlImagen")] Imagenes imagenes)
         {
 
+
             if (ModelState.IsValid)
             {
                 db.Entry(imagenes).State = EntityState.Modified;
