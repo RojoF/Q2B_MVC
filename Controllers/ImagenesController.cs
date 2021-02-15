@@ -17,21 +17,23 @@ namespace Q2B_MVC.Controllers
     {
         private PRUEBA_Q2BEntities db = new PRUEBA_Q2BEntities();
 
-        // GET: Imagenes
+
         public ActionResult Index()
         {
+            //Listar cards de tabla Imagenes
             var imagen = db.Imagenes.SqlQuery(
                 "SELECT * FROM dbo.Imagenes").ToList();
             return View(imagen);
         }
 
-        // GET: Imagenes/Details/5
+
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //Listar detalles de card seleccionada
             var imagen = db.Imagenes.SqlQuery(
                 "SELECT * FROM dbo.Imagenes where Id ={0}", id).FirstOrDefault();
 
@@ -42,16 +44,15 @@ namespace Q2B_MVC.Controllers
             return View(imagen);
         }
 
-        // GET: Imagenes/Create
+
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Imagenes/Create
-
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public ActionResult Create([Bind(Include = "Id,Titulo,Descripcion,UrlImagen")] FormCollection values, Imagenes imagenes)
         {
             var id = values["Id"];
@@ -61,6 +62,7 @@ namespace Q2B_MVC.Controllers
 
             if (ModelState.IsValid)
             {
+                //Crear nueva card en la tabla imagenes
                 db.Database.ExecuteSqlCommand(
                                     "INSERT INTO dbo.Imagenes(Id, Titulo, Descripcion, UrlImagen) " +
                                     "VALUES(@Id,@Titulo,@Descripcion,@UrlImagen)",
@@ -77,13 +79,14 @@ namespace Q2B_MVC.Controllers
             return View(imagenes);
         }
 
-        // GET: Imagenes/Edit/5
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var imagen = db.Imagenes.SqlQuery(
                 "SELECT * FROM dbo.Imagenes where Id ={0}", id).FirstOrDefault();
             if (imagen == null)
@@ -93,7 +96,7 @@ namespace Q2B_MVC.Controllers
             return View(imagen);
         }
 
-        // POST: Imagenes/Edit/5
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -106,6 +109,7 @@ namespace Q2B_MVC.Controllers
 
             if (ModelState.IsValid)
             {
+                // Editar Card seleccionada en tabla
                 db.Database.ExecuteSqlCommand(
                     "UPDATE dbo.Imagenes " +
                     "SET Titulo = @Titulo, Descripcion = @Descripcion, UrlImagen = @UrlImagen " +
@@ -119,7 +123,7 @@ namespace Q2B_MVC.Controllers
             return View(imagenes);
         }
 
-        // GET: Imagenes/Delete/5
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -136,7 +140,6 @@ namespace Q2B_MVC.Controllers
 
         }
 
-        // POST: Imagenes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
 

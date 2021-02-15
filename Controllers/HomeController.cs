@@ -12,6 +12,7 @@ namespace Q2B_MVC.Controllers
         private PRUEBA_Q2BEntities db = new PRUEBA_Q2BEntities();
         public ActionResult Index()
         {
+            // Listar cards de tabla Imagenes
             var imagen = db.Imagenes.SqlQuery("SELECT * FROM dbo.Imagenes").ToList();
             return View(imagen);
         }
