@@ -11,7 +11,7 @@ namespace Q2B_MVC.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Imagenes
     {
         public int Id { get; set; }

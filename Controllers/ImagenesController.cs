@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Spatial;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -17,7 +20,9 @@ namespace Q2B_MVC.Controllers
         // GET: Imagenes
         public ActionResult Index()
         {
-            return View(db.Imagenes.ToList());
+            var imagen = db.Imagenes.SqlQuery(
+                "SELECT * FROM dbo.Imagenes").ToList();
+            return View(imagen);
         }
 
         // GET: Imagenes/Details/5
@@ -27,12 +32,14 @@ namespace Q2B_MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Imagenes imagenes = db.Imagenes.Find(id);
-            if (imagenes == null)
+            var imagen = db.Imagenes.SqlQuery(
+                "SELECT * FROM dbo.Imagenes where Id ={0}", id).FirstOrDefault();
+
+            if (imagen == null)
             {
                 return HttpNotFound();
             }
-            return View(imagenes);
+            return View(imagen);
         }
 
         // GET: Imagenes/Create
@@ -45,12 +52,25 @@ namespace Q2B_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titulo,Descripcion,UrlImagen")] Imagenes imagenes)
+        public ActionResult Create([Bind(Include = "Id,Titulo,Descripcion,UrlImagen")] FormCollection values, Imagenes imagenes)
         {
+            var id = values["Id"];
+            var titulo = values["Titulo"];
+            var descripcion = values["Descripcion"];
+            var urlImagen = values["UrlImagen"];
+
             if (ModelState.IsValid)
             {
-                db.Imagenes.Add(imagenes);
-                db.SaveChanges();
+                db.Database.ExecuteSqlCommand(
+                                    "INSERT INTO dbo.Imagenes(Id, Titulo, Descripcion, UrlImagen) " +
+                                    "VALUES(@Id,@Titulo,@Descripcion,@UrlImagen)",
+                                    new SqlParameter("@Id", id),
+                                    new SqlParameter("@Titulo", titulo),
+                                    new SqlParameter("@Descripcion", descripcion),
+                                    new SqlParameter("@UrlImagen", urlImagen)
+                                    );
+
+
                 return RedirectToAction("Index");
             }
 
@@ -64,26 +84,36 @@ namespace Q2B_MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Imagenes imagenes = db.Imagenes.Find(id);
-            if (imagenes == null)
+            var imagen = db.Imagenes.SqlQuery(
+                "SELECT * FROM dbo.Imagenes where Id ={0}", id).FirstOrDefault();
+            if (imagen == null)
             {
                 return HttpNotFound();
             }
-            return View(imagenes);
+            return View(imagen);
         }
 
         // POST: Imagenes/Edit/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Titulo,Descripcion,UrlImagen")] Imagenes imagenes)
+        public ActionResult Edit([Bind(Include = "Id,Titulo,Descripcion,UrlImagen")] Imagenes imagenes, FormCollection values, int? id)
         {
 
+            var titulo = values["Titulo"];
+            var descripcion = values["Descripcion"];
+            var urlImagen = values["UrlImagen"];
 
             if (ModelState.IsValid)
             {
-                db.Entry(imagenes).State = EntityState.Modified;
-                db.SaveChanges();
+                db.Database.ExecuteSqlCommand(
+                    "UPDATE dbo.Imagenes " +
+                    "SET Titulo = @Titulo, Descripcion = @Descripcion, UrlImagen = @UrlImagen " +
+                    "WHERE Id = @Id",
+                   new SqlParameter("@Id", id),
+                   new SqlParameter("@Titulo", titulo),
+                   new SqlParameter("@Descripcion", descripcion),
+                   new SqlParameter("@UrlImagen", urlImagen));
                 return RedirectToAction("Index");
             }
             return View(imagenes);
@@ -96,22 +126,30 @@ namespace Q2B_MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Imagenes imagenes = db.Imagenes.Find(id);
-            if (imagenes == null)
+            var imagen = db.Imagenes.SqlQuery(
+               "SELECT * FROM dbo.Imagenes where Id ={0}", id).FirstOrDefault();
+            if (imagen == null)
             {
                 return HttpNotFound();
             }
-            return View(imagenes);
+            return View(imagen);
+
         }
 
         // POST: Imagenes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+
+
+        public ActionResult DeleteConfirmed(int? id)
         {
-            Imagenes imagenes = db.Imagenes.Find(id);
-            db.Imagenes.Remove(imagenes);
-            db.SaveChanges();
+            if (id != null)
+            {
+                //Eliminar card seleccionada
+                db.Database.ExecuteSqlCommand("DELETE from dbo.Imagenes WHERE Id = @Id",
+                    new SqlParameter("@Id", id));
+
+            }
             return RedirectToAction("Index");
         }
 
@@ -125,3 +163,5 @@ namespace Q2B_MVC.Controllers
         }
     }
 }
+
+
